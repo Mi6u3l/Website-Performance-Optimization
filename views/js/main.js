@@ -406,13 +406,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -424,7 +424,7 @@ var resizePizzas = function(size) {
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
     var oldwidth = elem.offsetWidth;
-    var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
+    var windowwidth = document.getElementById("randomPizzas").offsetWidth;
     var oldsize = oldwidth / windowwidth;
 
     // TODO: change to 3 sizes? no more xl?
@@ -452,12 +452,13 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
     // Issue 1: moved caulculating offsetWith and dx out of the loop
     // save the value to vars     
-    var dx = determineDx(document.querySelector(".randomPizzaContainer"), size);
-    var offsetWidth = document.querySelector(".randomPizzaContainer").offsetWidth;
+    var dx = determineDx(document.getElementById("pizza0"), size);
+    var offsetWidth = document.getElementById("pizza0").offsetWidth;
 
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
+    var randomPizzasLength = document.getElementsByClassName("randomPizzaContainer").length;
+    for (var i = 0; i < randomPizzasLength; i++) {
       var newwidth = (offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+      document.getElementsByClassName("randomPizzaContainer")[i].style.width = newwidth;
     }
   }
 
@@ -508,7 +509,7 @@ function updatePositions() {
   // Issue 2: moved document.body.scrollTop out of the loop
   // save the scrollTop value to a var to avoid calculating the value in the loop
   var scrollTop = document.body.scrollTop;
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover');
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
@@ -531,7 +532,7 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 100; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -539,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
